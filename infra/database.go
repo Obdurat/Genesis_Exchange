@@ -36,3 +36,7 @@ func (d *Datasource) Exec(query string, args interface{}) (sql.Result, error) {
 	}
 	return result, nil
 }
+
+func New() IDatasource {
+	return &Datasource{}
+}
