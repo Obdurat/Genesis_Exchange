@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS genesis.currency (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  currency_name VARCHAR(255) NOT NULL
+)

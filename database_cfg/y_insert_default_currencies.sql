@@ -1,0 +1,1 @@
+INSERT INTO genesis.currency(currency_name) VALUES ("EUR"), ("BRL"), ("BTC"), ("USD")
