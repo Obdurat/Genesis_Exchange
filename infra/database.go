@@ -48,3 +48,5 @@ func (d *Datasource) Disconnect() error {
 func New() IDatasource {
 	return &Datasource{}
 }
+
+var DB = New()
