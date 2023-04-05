@@ -9,7 +9,8 @@ type Datasource struct {
 type IDatasource interface {
 	Connect(driver string, source string) error
 	Query(query string, args interface{}) (*sql.Rows, error)
-	Exec(query string, args interface{}) (sql.Result, error) 
+	Exec(query string, args interface{}) (sql.Result, error)
+	Disconnect() error
 }
 
 func (d *Datasource) Connect(driver string, source string) error {
@@ -35,6 +36,13 @@ func (d *Datasource) Exec(query string, args interface{}) (sql.Result, error) {
 		return nil, err
 	}
 	return result, nil
+}
+
+func (d *Datasource) Disconnect() error {
+	if err := d.Source.Close(); err != nil {
+		return err
+	}
+	return nil
 }
 
 func New() IDatasource {
