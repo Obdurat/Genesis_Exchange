@@ -3,7 +3,7 @@ version: '3'
 services:  
   db:
   # Constrói a partir do Dockerfile na pasta Database
-    build: ./database
+    build: ./database_cfg
     container_name: genesis_database
     restart: always
     tty: true
