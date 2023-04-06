@@ -62,4 +62,8 @@ func (r *Repository) List() ([]Exchange, error) {
 	return out, nil
 }
 
-var Repo = &Repository{infra.DB}
+func New(db infra.IDatasource) IRepository {
+	return &Repository{db}
+}
+
+var Repo = New(infra.DB)
