@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/Obdurat/genesis/infra"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func (r *Repository) Save(amount float64, from string, to string, rate float64, result float64) {
