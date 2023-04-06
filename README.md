@@ -54,6 +54,14 @@ Para rodar esse projeto, você vai precisar criar um arquivo chamado .env e adic
 | `To` | `string` | A moeda que o valor foi convertido para |
 | `rate` | `float64` | A taxa de conversão da moeda |
 
+#### Moedas Suportadas nos parametros "from" e "to"
+<ul>
+  <li>BTC</li>
+  <li>EUR</li>
+  <li>BRL</li>
+  <li>USD</li>
+</ul>
+
 **Exemplo de Retorno**
 
 ```json
