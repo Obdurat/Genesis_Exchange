@@ -5,7 +5,6 @@ import (
 
 	"github.com/Obdurat/genesis/handlers"
 	"github.com/gin-gonic/gin"
-	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {

@@ -8,22 +8,12 @@ import (
 	"github.com/Obdurat/genesis/infra"
 )
 
-type Exchange struct {
-	Id *int `json:"id"`
-	Amount *float64 `json:"amount"`
-	From *string `json:"from"`
-	To *string `json:"to"`
-	Rate *float64 `json:"rate"`
-	Result *float64 `json:"result"`
-}
-
-func Save(amount float64, from string, to string, rate float64, result float64) {
-	db := infra.DB
-	if err := db.Connect("mysql", fmt.Sprintf("root:%s@tcp(db:3306)/genesis", os.Getenv("MYSQL_ROOT_PASSWORD"))); err != nil {
+func (r *Repository) Save(amount float64, from string, to string, rate float64, result float64) {
+	if err := r.DB.Connect("mysql", fmt.Sprintf("root:%s@tcp(db:3306)/genesis", os.Getenv("MYSQL_ROOT_PASSWORD"))); err != nil {
 		log.Fatalf("Couldn't connect to genesis database: %s", err); return
 	}	
 
-	defer db.Disconnect()
+	defer r.DB.Disconnect()
 
 	query := `
 		INSERT INTO genesis.exchanges(amount, from_currency, to_currency, rate, conversion_result)	
@@ -33,19 +23,18 @@ func Save(amount float64, from string, to string, rate float64, result float64) 
 				(SELECT id FROM currency WHERE currency_name = ? ),
 			?, ?)`
 
-	_, err := db.Exec(query, amount, from, to, rate, result)
+	_, err := r.DB.Exec(query, amount, from, to, rate, result)
 	if err != nil {
 		log.Fatalf("Couldn't insert to genesis database: %s", err); return
 	}
 }
 
-func List() ([]Exchange, error) {
-	db := infra.DB
-	if err := db.Connect("mysql", fmt.Sprintf("root:%s@tcp(db:3306)/genesis", os.Getenv("MYSQL_ROOT_PASSWORD"))); err != nil {
+func (r *Repository) List() ([]Exchange, error) {
+	if err := r.DB.Connect("mysql", fmt.Sprintf("root:%s@tcp(db:3306)/genesis", os.Getenv("MYSQL_ROOT_PASSWORD"))); err != nil {
 		log.Fatalf("Couldn't connect to genesis database: %s", err); return nil, err
 	}	
 
-	defer db.Disconnect()
+	defer r.DB.Disconnect()
 	query := `SELECT 
 		exchanges.id,
 		exchanges.amount,
@@ -59,7 +48,7 @@ func List() ([]Exchange, error) {
 
 	var out []Exchange
 
-	results, err := db.Query(query)
+	results, err := r.DB.Query(query)
 
 	for results.Next() {
 		var exchange Exchange
@@ -70,6 +59,7 @@ func List() ([]Exchange, error) {
 	if err != nil {
 		log.Fatalf("Couldn't insert to genesis database: %s", err); return nil, err
 	}
-
 	return out, nil
 }
+
+var Repo = &Repository{infra.DB}

@@ -25,10 +25,10 @@ func CalcExchange(c *gin.Context) {
 
 	result := original * conversion_rate
 
-	go repository.Save(original, from, to ,conversion_rate, result);
+	go repository.Repo.Save(original, from, to ,conversion_rate, result);
 
 	c.JSON(http.StatusOK, &Reponse{
 		Result: result,
 		Simbol: simbol,
-	})
+	}); return
 }

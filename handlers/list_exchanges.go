@@ -8,8 +8,8 @@ import (
 )
 
 func ListExchanges(c *gin.Context) {
-	results, err := repository.List(); if err != nil {
+	results, err := repository.Repo.List(); if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()}); return
 	}
-	c.JSON(http.StatusOK, results)
+	c.JSON(http.StatusOK, results); return
 }
