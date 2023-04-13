@@ -3,19 +3,16 @@ package handlers
 import "fmt"
 
 func CurrencySim(in string) (string, error) {
-	var simbol string
-	var err error
 	switch in {
 	case "BRL":
-		simbol = "R$"; break
+		return "R$", nil
 	case "USD":
-		simbol = "$"; break
+		return "$", nil
 	case "EUR":
-		simbol = "€"; break
+		return "€", nil
 	case "BTC":
-		simbol = "₿"; break
+		return "₿", nil
 	default:
-		err = fmt.Errorf("Currency not supported: %s", in)
+		return "", fmt.Errorf("Currency not supported: %s", in)
 	}
-	return simbol, err
 }
