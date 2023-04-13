@@ -1,6 +1,9 @@
 package infra
 
-import "database/sql"
+import (
+	"context"
+	"database/sql"
+)
 
 type Datasource struct {
 	Source *sql.DB
@@ -8,7 +11,6 @@ type Datasource struct {
 
 type IDatasource interface {
 	Connect(driver string, source string) error
-	Query(query string, args ...interface{}) (*sql.Rows, error)
-	Exec(query string, args ...interface{}) (sql.Result, error)
+	GetConn(ctx context.Context) (*sql.Conn, error)
 	Disconnect() error
 }
